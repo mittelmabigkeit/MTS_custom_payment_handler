@@ -89,69 +89,6 @@ class mtsHandler extends PaySystem\BaseServiceHandler
 			LocalRedirect($link, true);
 			echo '<a href="'.$link.'">Ссылка</a>';
 		}
-
-		/*$data_str = '';
-		$curlRequest = curl_init('https://api-test.mtsbank.ru/loan-service-pos/v1/applications/'.$integrationId.'/info');
-		curl_setopt($curlRequest, CURLOPT_CUSTOMREQUEST, "GET");
-		curl_setopt($curlRequest, CURLOPT_POSTFIELDS, $data_str);
-		curl_setopt($curlRequest, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($curlRequest, CURLOPT_HTTPHEADER, [
-			'Content-Type: application/json',
-			'Client-Id: web-loan-service-pos'
-		]);
-		$resCurlRequest = curl_exec($curlRequest);
-		curl_close($curlRequest);
-		$requestResult = json_decode($resCurlRequest);
-		$status = $requestResult->status;
-		if (!empty($status)) {
-			$purchaseObj = $requestResult->purchase;
-			foreach ($purchaseObj as $obj) {
-				$arBalance = $obj;
-			}
-			$balance = $arBalance->price;
-	
-			if($status == 'new' || $status == 'loader' || $status == 'client-data-required' || $status == 'scoring') {
-				//ничего не делаем
-
-				$propertyCollection = $orderLoad->getPropertyCollection();
-				$propIntegrationId = $propertyCollection->getItemByOrderPropertyId(52);
-				$propLimit = $propertyCollection->getItemByOrderPropertyId(53);
-				$propIntegrationId->setValue($arUser['UF_INTEGRATION_ID']);
-				$propLimit->setValue($balance);
-				$orderLoad->save();
-			} elseif($status == 'canceled' || $status == 'rejected' || $status == 'issued') {
-				//обнуляем значение лимита и integrationId
-				$user = new \CUser;
-				$fields = Array(
-					"UF_BALANCE" => '',
-					"UF_INTEGRATION_ID" => ''
-				 );
-				$user->Update($userId, $fields);
-	
-				$propertyCollection = $orderLoad->getPropertyCollection();
-				$propIntegrationId = $propertyCollection->getItemByOrderPropertyId(52);
-				$propLimit = $propertyCollection->getItemByOrderPropertyId(53);
-				$propIntegrationId->setValue($arUser['UF_INTEGRATION_ID']);
-				$propLimit->setValue($balance);
-				$orderLoad->save();
-			} elseif($status == 'limit-accepted' || $status == 'limit' || $status == 'approved-delivery') {
-				//обновляем/добавляем лимита
-				$user = new \CUser;
-				$fields = Array(
-					"UF_BALANCE" => $balance,
-				 );
-				$user->Update($userId, $fields);
-	
-				$propertyCollection = $orderLoad->getPropertyCollection();
-				$propIntegrationId = $propertyCollection->getItemByOrderPropertyId(52);
-				$propLimit = $propertyCollection->getItemByOrderPropertyId(53);
-				$propIntegrationId->setValue($arUser['UF_INTEGRATION_ID']);
-				$propLimit->setValue($balance);
-				$orderLoad->save();
-			} else {
-				$result->addError(new EntityError(Loc::getMessage('ORDER_PSH_INNER_ERROR_INSUFFICIENT_MONEY')));
-			}
-		}*/
 		return $result;
 	}
 
